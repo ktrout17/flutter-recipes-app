@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "249878096645",
+    "project_id": "flutter-recipes-app-d0c02",
+    "storage_bucket": "flutter-recipes-app-d0c02.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249878096645:android:4cedb61bc8475d302b256c",
+        "android_client_info": {
+          "package_name": "com.example.meals"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvYMqqTQuBHdP39jpko6W41nSOC9qvm5s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:249878096645:android:99f8739693a724122b256c",
+        "android_client_info": {
+          "package_name": "com.example.recipes_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAvYMqqTQuBHdP39jpko6W41nSOC9qvm5s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
