@@ -12,7 +12,12 @@
           "package_name": "com.example.meals"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "249878096645-hff2qp89jjmcm54am3635ird8ai723a9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAvYMqqTQuBHdP39jpko6W41nSOC9qvm5s"
@@ -20,7 +25,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249878096645-hff2qp89jjmcm54am3635ird8ai723a9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "249878096645-99j0rl63oe5c77v7ud5jhop17ga3364v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.recipesApp"
+              }
+            }
+          ]
         }
       }
     },
@@ -31,7 +48,20 @@
           "package_name": "com.example.recipes_app"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "249878096645-amhrcnuek1isq6sboj334u6pbq4e2ok6.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.recipes_app",
+            "certificate_hash": "9c909fe2360d6f8f50d71d9b52ed1c0a89ce7596"
+          }
+        },
+        {
+          "client_id": "249878096645-hff2qp89jjmcm54am3635ird8ai723a9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyAvYMqqTQuBHdP39jpko6W41nSOC9qvm5s"
@@ -39,7 +69,19 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "249878096645-hff2qp89jjmcm54am3635ird8ai723a9.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "249878096645-99j0rl63oe5c77v7ud5jhop17ga3364v.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.recipesApp"
+              }
+            }
+          ]
         }
       }
     }

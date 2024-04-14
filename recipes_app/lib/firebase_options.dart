@@ -63,6 +63,8 @@ class DefaultFirebaseOptions {
     messagingSenderId: '249878096645',
     projectId: 'flutter-recipes-app-d0c02',
     storageBucket: 'flutter-recipes-app-d0c02.appspot.com',
+    androidClientId: '249878096645-amhrcnuek1isq6sboj334u6pbq4e2ok6.apps.googleusercontent.com',
+    iosClientId: '249878096645-99j0rl63oe5c77v7ud5jhop17ga3364v.apps.googleusercontent.com',
     iosBundleId: 'com.example.recipesApp',
   );
 }

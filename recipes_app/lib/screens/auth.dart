@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:google_sign_in/google_sign_in.dart';
+import 'package:recipes_app/screens/tabs.dart';
 
 final _firebase = FirebaseAuth.instance;
 
@@ -67,6 +69,37 @@ class _AuthScreenState extends State<AuthScreen> {
       setState(() {
         _isAuthenticating = false;
       });
+    }
+  }
+
+  void _googleSignIn() async {
+    final googleAccount = await GoogleSignIn().signIn();
+
+    final googleAuth = await googleAccount?.authentication;
+
+    final credential = GoogleAuthProvider.credential(
+      accessToken: googleAuth?.accessToken,
+      idToken: googleAuth?.idToken,
+    );
+
+    final userCredential =
+        await FirebaseAuth.instance.signInWithCredential(credential);
+
+    try {
+      if (userCredential.user != null) {
+        Navigator.of(context).pushReplacement(
+          MaterialPageRoute(
+            builder: (context) => const TabsScreen(),
+          ),
+        );
+      }
+    } on FirebaseAuthException catch (error) {
+      ScaffoldMessenger.of(context).clearSnackBars();
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(error.message ?? 'Authentication failed.'),
+        ),
+      );
     }
   }
 
@@ -173,6 +206,21 @@ class _AuthScreenState extends State<AuthScreen> {
                                   ? 'Create an account'
                                   : 'I already have an account'),
                             ),
+                          ElevatedButton.icon(
+                            icon: Image.asset(
+                              'assets/icons/google.png',
+                              width: 30,
+                            ),
+                            onPressed: () async {
+                              _googleSignIn();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              backgroundColor: Theme.of(context)
+                                  .colorScheme
+                                  .primaryContainer,
+                            ),
+                            label: const Text('Continue with Google'),
+                          ),
                         ],
                       ),
                     ),
