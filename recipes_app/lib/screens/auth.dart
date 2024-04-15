@@ -85,6 +85,7 @@ class _AuthScreenState extends State<AuthScreen> {
     final userCredential =
         await FirebaseAuth.instance.signInWithCredential(credential);
 
+    print(userCredential);
     try {
       if (userCredential.user != null) {
         Navigator.of(context).pushReplacement(

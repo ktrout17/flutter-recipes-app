@@ -5,9 +5,10 @@ import '../models/category.dart';
 import '../models/meal.dart';
 import '../widgets/category_grid_item.dart';
 import 'meals.dart';
+import 'package:http/http.dart' as http;
 
 class CategoriesScreen extends StatefulWidget {
-  const CategoriesScreen({
+   CategoriesScreen({
     super.key,
     required this.availableMeals,
   });
@@ -26,6 +27,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
   @override
   void initState() {
     super.initState();
+    _getItems();
 
     _animationController = AnimationController(
       vsync: this,
@@ -45,15 +47,28 @@ class _CategoriesScreenState extends State<CategoriesScreen>
     super.dispose();
   }
 
-  void _selectCategory(BuildContext context, Category category) {
+  void _getItems() async{
+    final app_id = 'd414be06';
+    final app_key = 'c29462a45fd31a59c4a4f5f16730505';
+
+    final url = Uri.https('api.edamam.com', '/api/recipes/v2', {'type': 'public', 'app_id': 'd414be06', 'app_key': 'c29462a45fd31a59c4a4f5f16730505', 'mealType': 'Breakfast'});
+
+    print(url);
+    final response = await http.get(url);
+    print(response.body);
+  }
+
+  void _selectCategory(BuildContext context, Category category) async{
     final filteredMeals = widget.availableMeals
         .where((meal) => meal.categories.contains(category.id))
         .toList();
 
+    _getItems();
+
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => MealsScreen(
-          title: category.title,
+          title: category.mealType,
           meals: filteredMeals,
         ),
       ),
