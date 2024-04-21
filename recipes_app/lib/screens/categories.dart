@@ -1,5 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:recipes_app/widgets/meal_item.dart';
 
 import '../data/dummy_data.dart';
 import '../models/category.dart';
@@ -46,7 +49,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
     super.dispose();
   }
 
-  Future<List<Meal>> _getItems(String mealType) async {
+  Future<Map<String, dynamic>> _getItems(String mealType) async {
     const appId = 'd414be06';
     const appKey = 'c29462a45fd31a59c4a4f5f167305059';
 
@@ -58,7 +61,23 @@ class _CategoriesScreenState extends State<CategoriesScreen>
     });
 
     final response = await http.get(url);
-    return response.body;
+
+    // throw Exception();
+
+    final Map<String, dynamic> listData = json.decode(response.body);
+
+    // print(listData['hits'][1]);
+
+    final List<Meal> loadedItems = [];
+
+    for (final item in listData['hits']) {
+      print(item);
+
+      // loadedItems.add(
+      //   Meal(label: item.label, image: item.image, source: item.source, url: item.url, dietLabels: dietLabels, healthLabels: healthLabels, ingredientLines: ingredientLines, calories: calories, totalTime: totalTime, cuisineType: cuisineType, mealType: mealType, dishType: dishType, instructions: instructions, tags: tags, links: links)
+      // );
+    }
+    return listData;
   }
 
   void _selectCategory(BuildContext context, Category category) async {
@@ -68,14 +87,14 @@ class _CategoriesScreenState extends State<CategoriesScreen>
 
     final filteredMeals = _getItems(category.mealType);
 
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (ctx) => MealsScreen(
-          title: category.mealType,
-          meals: filteredMeals,
-        ),
-      ),
-    );
+    // Navigator.of(context).push(
+    //   MaterialPageRoute(
+    //     builder: (ctx) => MealsScreen(
+    //       title: category.mealType,
+    //       meals: filteredMeals,
+    //     ),
+    //   ),
+    // );
   }
 
   @override

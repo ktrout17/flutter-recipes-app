@@ -14,15 +14,15 @@ class MealItem extends StatelessWidget {
   final Meal meal;
   final void Function(Meal meal) onSelectMeal;
 
-  String get complexityText {
-    return meal.complexity.name[0].toUpperCase() +
-        meal.complexity.name.substring(1);
-  }
+  // String get complexityText {
+  //   return meal.complexity.name[0].toUpperCase() +
+  //       meal.complexity.name.substring(1);
+  // }
 
-  String get affordabilityText {
-    return meal.affordability.name[0].toUpperCase() +
-        meal.affordability.name.substring(1);
-  }
+  // String get affordabilityText {
+  //   return meal.affordability.name[0].toUpperCase() +
+  //       meal.affordability.name.substring(1);
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -40,10 +40,10 @@ class MealItem extends StatelessWidget {
         child: Stack(
           children: [
             Hero(
-              tag: meal.id,
+              tag: meal.label,
               child: FadeInImage(
                 placeholder: MemoryImage(kTransparentImage),
-                image: NetworkImage(meal.imageUrl),
+                image: NetworkImage(meal.image),
                 fit: BoxFit.cover,
                 height: 200,
                 width: double.infinity,
@@ -62,7 +62,7 @@ class MealItem extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      meal.title,
+                      meal.label,
                       maxLines: 2,
                       textAlign: TextAlign.center,
                       softWrap: true,
@@ -81,21 +81,17 @@ class MealItem extends StatelessWidget {
                       children: [
                         MealItemTrait(
                           icon: Icons.schedule,
-                          label: '${meal.duration} min',
+                          label: '${meal.totalTime} min',
                         ),
                         const SizedBox(
                           width: 12,
                         ),
-                        MealItemTrait(
-                          icon: Icons.work,
-                          label: complexityText,
-                        ),
+                        // MealItemTrait(
+                        //   icon: Icons.work,
+                        //   label: complexityText,
+                        // ),
                         const SizedBox(
                           width: 12,
-                        ),
-                        MealItemTrait(
-                          icon: Icons.attach_money,
-                          label: affordabilityText,
                         ),
                       ],
                     )

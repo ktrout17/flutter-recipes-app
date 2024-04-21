@@ -21,7 +21,7 @@ class MealDetailsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          meal.title,
+          meal.label,
         ),
         actions: [
           IconButton(
@@ -57,9 +57,9 @@ class MealDetailsScreen extends ConsumerWidget {
         child: Column(
           children: [
             Hero(
-              tag: meal.id,
+              tag: meal.label,
               child: Image.network(
-                meal.imageUrl,
+                meal.image,
                 width: double.infinity,
                 height: 300,
                 fit: BoxFit.cover,
@@ -78,7 +78,7 @@ class MealDetailsScreen extends ConsumerWidget {
             const SizedBox(
               height: 14,
             ),
-            for (final ingredient in meal.ingredients)
+            for (final ingredient in meal.ingredientLines)
               Text(
                 ingredient,
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
@@ -98,7 +98,7 @@ class MealDetailsScreen extends ConsumerWidget {
             const SizedBox(
               height: 14,
             ),
-            for (final step in meal.steps)
+            for (final step in meal.instructions)
               Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 12,
