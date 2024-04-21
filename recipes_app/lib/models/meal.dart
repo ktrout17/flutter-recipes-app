@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 enum Complexity {
   simple,
   challenging,
@@ -12,32 +14,36 @@ enum Affordability {
 
 class Meal {
   const Meal({
-    required this.id,
-    required this.categories,
-    required this.title,
-    required this.imageUrl,
-    required this.ingredients,
-    required this.steps,
-    required this.duration,
-    required this.complexity,
-    required this.affordability,
-    required this.isGlutenFree,
-    required this.isLactoseFree,
-    required this.isVegan,
-    required this.isVegetarian,
+    required this.label,
+    required this.image,
+    required this.source,
+    required this.url,
+    required this.dietLabels,
+    required this.healthLabels,
+    required this.ingredientLines,
+    required this.calories,
+    required this.totalTime,
+    required this.cuisineType,
+    required this.mealType,
+    required this.dishType,
+    required this.instructions,
+    required this.tags,
+    required this.links,
   });
 
-  final String id;
-  final List<String> categories;
-  final String title;
-  final String imageUrl;
-  final List<String> ingredients;
-  final List<String> steps;
-  final int duration;
-  final Complexity complexity;
-  final Affordability affordability;
-  final bool isGlutenFree;
-  final bool isLactoseFree;
-  final bool isVegan;
-  final bool isVegetarian;
+  final String label;
+  final String image;
+  final String source;
+  final String url;
+  final List<String> dietLabels;
+  final List<String> healthLabels;
+  final List<String> ingredientLines;
+  final Float calories;
+  final String totalTime;
+  final List<String> cuisineType;
+  final List<String> mealType;
+  final List<String> dishType;
+  final List<String> instructions;
+  final List<String> tags;
+  final List<String> links;
 }
