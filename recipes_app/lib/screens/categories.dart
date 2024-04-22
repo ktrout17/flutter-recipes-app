@@ -56,8 +56,25 @@ class _CategoriesScreenState extends State<CategoriesScreen>
       'type': 'public',
       'app_id': appId,
       'app_key': appKey,
-      'mealType': mealType
+      'mealType': mealType,
+      'field': [
+        'label',
+        'image',
+        'source',
+        'url',
+        'dietLabels',
+        'healthLabels',
+        'ingredientLines',
+        'calories',
+        'totalTime',
+        'cuisineType',
+        'mealType',
+        'dishType',
+        'tags',
+      ]
     });
+
+    print(url);
 
     final response = await http.get(url);
 
