@@ -26,7 +26,7 @@ class Meal {
   final String idMeal;
   final String strMeal;
   final String? strCategory;
-  final String? strInstructions;
+  final List<String>? strInstructions;
   final String strMealThumb;
   final String? strTags;
   final String? strYoutube;

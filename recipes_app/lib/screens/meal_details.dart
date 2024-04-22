@@ -78,13 +78,14 @@ class MealDetailsScreen extends ConsumerWidget {
             const SizedBox(
               height: 14,
             ),
-            // for (final ingredient in meal.ingredients)
-            //   Text(
-            //     ingredient,
-            //     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-            //           color: Theme.of(context).colorScheme.onBackground,
-            //         ),
-            //   ),
+            if (meal.ingredients != null)
+              for (final ingredient in meal.ingredients!)
+                Text(
+                  ingredient,
+                  style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                        color: Theme.of(context).colorScheme.onBackground,
+                      ),
+                ),
             const SizedBox(
               height: 24,
             ),
@@ -98,21 +99,21 @@ class MealDetailsScreen extends ConsumerWidget {
             const SizedBox(
               height: 14,
             ),
-            // if (meal.strInstructions != null)
-            //   for (final step in meal.strInstructions!)
-            //     Padding(
-            //       padding: const EdgeInsets.symmetric(
-            //         horizontal: 12,
-            //         vertical: 8,
-            //       ),
-            //       child: Text(
-            //         step,
-            //         textAlign: TextAlign.center,
-            //         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-            //               color: Theme.of(context).colorScheme.onBackground,
-            //             ),
-            //       ),
-            //     ),
+            if (meal.strInstructions != null)
+              for (final step in meal.strInstructions!)
+                Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: 12,
+                    vertical: 8,
+                  ),
+                  child: Text(
+                    step,
+                    textAlign: TextAlign.center,
+                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+                          color: Theme.of(context).colorScheme.onBackground,
+                        ),
+                  ),
+                ),
           ],
         ),
       ),

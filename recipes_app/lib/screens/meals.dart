@@ -1,10 +1,13 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 import '../models/meal.dart';
 import '../widgets/meal_item.dart';
 import 'meal_details.dart';
 
-class MealsScreen extends StatelessWidget {
+class MealsScreen extends StatefulWidget {
   const MealsScreen({
     super.key,
     this.title,
@@ -14,11 +17,75 @@ class MealsScreen extends StatelessWidget {
   final String? title;
   final List<Meal> meals;
 
-  void selectMeal(BuildContext context, Meal meal) {
+  @override
+  State<MealsScreen> createState() => _MealsScreenState();
+}
+
+class _MealsScreenState extends State<MealsScreen> {
+  @override
+  void initState() {
+    super.initState();
+  }
+
+  Future<Meal> _getMealDetails(String mealId) async {
+    final url = Uri.https(
+      'themealdb.com',
+      '/api/json/v1/1/lookup.php',
+      {
+        'i': mealId,
+      },
+    );
+
+    final response = await http.get(url);
+    final mealDetails = json.decode(response.body);
+    final meal = mealDetails['meals'][0];
+
+    List<String> instructions;
+    if (meal['strInstructions'] != null && meal['strInstructions'].isNotEmpty) {
+      instructions = meal['strInstructions'].split('. ');
+    } else {
+      instructions = [];
+    }
+
+    List<String> ingredients = [];
+    for (int i = 1; i <= 20; i++) {
+      String measure = meal["strMeasure$i"];
+      String ingredient = meal["strIngredient$i"];
+      if (measure != null &&
+          ingredient != null &&
+          measure.isNotEmpty &&
+          ingredient.isNotEmpty) {
+        ingredients.add("$measure $ingredient");
+      } else {
+        // If either measure or ingredient is null or empty, we break the loop
+        break;
+      }
+    }
+
+    final Meal details = Meal(
+      idMeal: meal['idMeal'],
+      strMeal: meal['strMeal'],
+      strCategory: meal['strCategory'],
+      strInstructions: instructions,
+      strMealThumb: meal['strMealThumb'],
+      strTags: meal['strTags'],
+      strYoutube: meal['strYoutube'],
+      ingredients: ingredients,
+      strSource: meal['strSource'],
+    );
+
+    // print(details);
+
+    return details;
+  }
+
+  Future<void> selectMeal(BuildContext context, Meal meal) async {
+    final mealDetails = await _getMealDetails(meal.idMeal);
+
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => MealDetailsScreen(
-          meal: meal,
+          meal: mealDetails,
         ),
       ),
     );
@@ -49,11 +116,11 @@ class MealsScreen extends StatelessWidget {
       ),
     );
 
-    if (meals.isNotEmpty) {
+    if (widget.meals.isNotEmpty) {
       content = ListView.builder(
-        itemCount: meals.length,
+        itemCount: widget.meals.length,
         itemBuilder: (ctx, index) => MealItem(
-          meal: meals[index],
+          meal: widget.meals[index],
           onSelectMeal: (meal) {
             selectMeal(context, meal);
           },
@@ -61,12 +128,12 @@ class MealsScreen extends StatelessWidget {
       );
     }
 
-    if (title == null) {
+    if (widget.title == null) {
       return content;
     }
     return Scaffold(
       appBar: AppBar(
-        title: Text(title!),
+        title: Text(widget.title!),
       ),
       body: content,
     );
