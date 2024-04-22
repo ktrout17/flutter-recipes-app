@@ -28,7 +28,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
   @override
   void initState() {
     super.initState();
-    _getCategories();
+    _fetchCategories();
 
     _animationController = AnimationController(
       vsync: this,
@@ -48,23 +48,36 @@ class _CategoriesScreenState extends State<CategoriesScreen>
     super.dispose();
   }
 
-  _getCategories() async {
-    final url = Uri.https('themealdb.com', '/api/json/v1/1/categories.php');
+  Future<void> _fetchCategories() async {
+    try {
+      final categories = await _getCategories();
+      setState(() {
+        availableCategories = categories;
+      });
+    } catch (error) {
+      // Handle error
+      print('Error fetching categories: $error');
+    }
+  }
 
+  Future<List<Category>> _getCategories() async {
+    final url = Uri.https('themealdb.com', '/api/json/v1/1/categories.php');
     final response = await http.get(url);
     final listData = json.decode(response.body);
 
+    final List<Category> categories = [];
     for (final item in listData['categories']) {
-      // print(recipe._links);
-      // availableCategories.add(Category(
-      //   idCategory: item.idCategory,
-      //   strCategory: item.strCategory,
-      //   strCategoryThumb: item.strCategoryThumb,
-      //   strCategoryDescription: item.strCategoryDescription,
-      // ));
+      categories.add(
+        Category(
+          idCategory: item['idCategory'],
+          strCategory: item['strCategory'],
+          strCategoryThumb: item['strCategoryThumb'],
+          strCategoryDescription: item['strCategoryDescription'],
+        ),
+      );
     }
 
-    print(listData['categories']);
+    return categories;
   }
 
   Future<List<Meal>> _getItems(String mealType) async {
@@ -157,6 +170,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
 
   @override
   Widget build(BuildContext context) {
+    print(availableCategories);
     return AnimatedBuilder(
       animation: _animationController,
       child: GridView(
