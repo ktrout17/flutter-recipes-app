@@ -3,7 +3,6 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-import '../data/dummy_data.dart';
 import '../models/category.dart';
 import '../models/meal.dart';
 import '../widgets/category_grid_item.dart';
@@ -16,7 +15,6 @@ class CategoriesScreen extends StatefulWidget {
   });
 
   final List<Meal> availableMeals;
-
   @override
   State<CategoriesScreen> createState() => _CategoriesScreenState();
 }
@@ -25,10 +23,12 @@ class _CategoriesScreenState extends State<CategoriesScreen>
     with SingleTickerProviderStateMixin {
   // once property is used it will have a value
   late AnimationController _animationController;
+  List<Category> availableCategories = [];
 
   @override
   void initState() {
     super.initState();
+    _getCategories();
 
     _animationController = AnimationController(
       vsync: this,
@@ -46,6 +46,25 @@ class _CategoriesScreenState extends State<CategoriesScreen>
   void dispose() {
     _animationController.dispose();
     super.dispose();
+  }
+
+  _getCategories() async {
+    final url = Uri.https('themealdb.com', '/api/json/v1/1/categories.php');
+
+    final response = await http.get(url);
+    final listData = json.decode(response.body);
+
+    for (final item in listData['categories']) {
+      // print(recipe._links);
+      // availableCategories.add(Category(
+      //   idCategory: item.idCategory,
+      //   strCategory: item.strCategory,
+      //   strCategoryThumb: item.strCategoryThumb,
+      //   strCategoryDescription: item.strCategoryDescription,
+      // ));
+    }
+
+    print(listData['categories']);
   }
 
   Future<List<Meal>> _getItems(String mealType) async {
@@ -124,12 +143,12 @@ class _CategoriesScreenState extends State<CategoriesScreen>
     //     .where((meal) => meal.categories.contains(category.id))
     //     .toList();
 
-    final filteredMeals = await _getItems(category.mealType);
+    final filteredMeals = await _getItems(category.idCategory);
 
     Navigator.of(context).push(
       MaterialPageRoute(
         builder: (ctx) => MealsScreen(
-          title: category.mealType,
+          title: category.strCategory,
           meals: filteredMeals,
         ),
       ),
