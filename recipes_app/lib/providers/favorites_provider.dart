@@ -9,7 +9,7 @@ class FavoriteMealsNotifier extends StateNotifier<List<Meal>> {
     final mealIsFavorite = state.contains(meal);
 
     if (mealIsFavorite) {
-      state = state.where((m) => m.label != meal.label).toList();
+      state = state.where((m) => m.strMeal != meal.strMeal).toList();
       return false;
     } else {
       state = [...state, meal];

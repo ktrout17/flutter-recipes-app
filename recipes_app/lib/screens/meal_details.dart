@@ -21,7 +21,7 @@ class MealDetailsScreen extends ConsumerWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          meal.label,
+          meal.strMeal,
         ),
         actions: [
           IconButton(
@@ -57,9 +57,9 @@ class MealDetailsScreen extends ConsumerWidget {
         child: Column(
           children: [
             Hero(
-              tag: meal.label,
+              tag: meal.strMeal,
               child: Image.network(
-                meal.image,
+                meal.strMealThumb,
                 width: double.infinity,
                 height: 300,
                 fit: BoxFit.cover,
@@ -78,13 +78,13 @@ class MealDetailsScreen extends ConsumerWidget {
             const SizedBox(
               height: 14,
             ),
-            for (final ingredient in meal.ingredientLines)
-              Text(
-                ingredient,
-                style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                      color: Theme.of(context).colorScheme.onBackground,
-                    ),
-              ),
+            // for (final ingredient in meal.ingredients)
+            //   Text(
+            //     ingredient,
+            //     style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+            //           color: Theme.of(context).colorScheme.onBackground,
+            //         ),
+            //   ),
             const SizedBox(
               height: 24,
             ),
@@ -98,21 +98,21 @@ class MealDetailsScreen extends ConsumerWidget {
             const SizedBox(
               height: 14,
             ),
-            if (meal.instructions != null)
-              for (final step in meal.instructions!)
-                Padding(
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 12,
-                    vertical: 8,
-                  ),
-                  child: Text(
-                    step,
-                    textAlign: TextAlign.center,
-                    style: Theme.of(context).textTheme.bodyMedium!.copyWith(
-                          color: Theme.of(context).colorScheme.onBackground,
-                        ),
-                  ),
-                ),
+            // if (meal.strInstructions != null)
+            //   for (final step in meal.strInstructions!)
+            //     Padding(
+            //       padding: const EdgeInsets.symmetric(
+            //         horizontal: 12,
+            //         vertical: 8,
+            //       ),
+            //       child: Text(
+            //         step,
+            //         textAlign: TextAlign.center,
+            //         style: Theme.of(context).textTheme.bodyMedium!.copyWith(
+            //               color: Theme.of(context).colorScheme.onBackground,
+            //             ),
+            //       ),
+            //     ),
           ],
         ),
       ),

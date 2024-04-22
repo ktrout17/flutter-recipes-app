@@ -14,7 +14,7 @@ class CategoryGridItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(category);
+    // print(category);
     return InkWell(
       onTap: onSelectCategory,
       splashColor: Theme.of(context).primaryColor,

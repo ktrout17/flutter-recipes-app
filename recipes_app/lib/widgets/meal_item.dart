@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 
 import '../models/meal.dart';
-import 'meal_item_trait.dart';
 
 class MealItem extends StatelessWidget {
   const MealItem({
@@ -40,10 +39,10 @@ class MealItem extends StatelessWidget {
         child: Stack(
           children: [
             Hero(
-              tag: meal.label,
+              tag: meal.strMeal,
               child: FadeInImage(
                 placeholder: MemoryImage(kTransparentImage),
-                image: NetworkImage(meal.image),
+                image: NetworkImage(meal.strMealThumb),
                 fit: BoxFit.cover,
                 height: 200,
                 width: double.infinity,
@@ -62,7 +61,7 @@ class MealItem extends StatelessWidget {
                 child: Column(
                   children: [
                     Text(
-                      meal.label,
+                      meal.strMeal,
                       maxLines: 2,
                       textAlign: TextAlign.center,
                       softWrap: true,
@@ -79,10 +78,10 @@ class MealItem extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        MealItemTrait(
-                          icon: Icons.schedule,
-                          label: '${meal.totalTime} min',
-                        ),
+                        // MealItemTrait(
+                        //   icon: Icons.schedule,
+                        //   label: '${meal.totalTime} min',
+                        // ),
                         const SizedBox(
                           width: 12,
                         ),

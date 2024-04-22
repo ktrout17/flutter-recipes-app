@@ -80,83 +80,36 @@ class _CategoriesScreenState extends State<CategoriesScreen>
     return categories;
   }
 
-  Future<List<Meal>> _getItems(String mealType) async {
+  Future<List<Meal>> _getItems(String category) async {
     const appId = 'd414be06';
     const appKey = 'c29462a45fd31a59c4a4f5f167305059';
 
-    final url = Uri.https('api.edamam.com', '/api/recipes/v2', {
-      'type': 'public',
-      'app_id': appId,
-      'app_key': appKey,
-      'mealType': mealType,
-      'field': [
-        'label',
-        'image',
-        'source',
-        'url',
-        'dietLabels',
-        'healthLabels',
-        'ingredientLines',
-        'calories',
-        'totalTime',
-        'cuisineType',
-        'mealType',
-        'dishType',
-        'tags',
-      ]
-    });
-
-    print(url);
+    final url = Uri.https(
+      'themealdb.com',
+      '/api/json/v1/1/filter.php',
+      {
+        'c': category,
+      },
+    );
 
     final response = await http.get(url);
 
-    // throw Exception();
-
     final listData = json.decode(response.body);
 
-    // print(listData['hits'][1]);
-
     final List<Meal> loadedItems = [];
-    // print(listData['hits'][0]);
 
-    for (final item in listData['hits']) {
-      final recipe = item['recipe'];
-      // print(recipe._links);
-      loadedItems.add(
-        Meal(
-            label: recipe['label'],
-            image: recipe['image'],
-            source: recipe['source'],
-            url: recipe['url'],
-            dietLabels: (recipe['dietLabels'] as List<dynamic>).cast<String>(),
-            healthLabels:
-                (recipe['healthLabels'] as List<dynamic>).cast<String>(),
-            ingredientLines:
-                (recipe['ingredientLines'] as List<dynamic>).cast<String>(),
-            calories: recipe['calories'],
-            totalTime: recipe['totalTime'],
-            cuisineType:
-                (recipe['cuisineType'] as List<dynamic>).cast<String>(),
-            mealType: (recipe['mealType'] as List<dynamic>).cast<String>(),
-            dishType: (recipe['dishType'] as List<dynamic>).cast<String>(),
-            instructions: (recipe['instructions'] != null)
-                ? (recipe['instructions'] as List<dynamic>).cast<String>()
-                : null,
-            tags: (recipe['tags'] != null)
-                ? (recipe['tags'] as List<dynamic>).cast<String>()
-                : null,
-            link: recipe['_links']),
-      );
+    for (final item in listData['meals']) {
+      loadedItems.add(Meal(
+        strMeal: item['strMeal'],
+        strMealThumb: item['strMealThumb'],
+        idMeal: item['idMeal'],
+      ));
     }
     return loadedItems;
   }
 
   void _selectCategory(BuildContext context, Category category) async {
-    // final filteredMeals = widget.availableMeals
-    //     .where((meal) => meal.categories.contains(category.id))
-    //     .toList();
-
-    final filteredMeals = await _getItems(category.idCategory);
+    final filteredMeals = await _getItems(category.strCategory);
 
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -170,7 +123,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
 
   @override
   Widget build(BuildContext context) {
-    print(availableCategories);
+    // print(availableCategories);
     return AnimatedBuilder(
       animation: _animationController,
       child: GridView(
