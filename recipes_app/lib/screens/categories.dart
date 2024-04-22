@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:recipes_app/widgets/meal_item.dart';
 
 import '../data/dummy_data.dart';
 import '../models/category.dart';
@@ -49,7 +48,7 @@ class _CategoriesScreenState extends State<CategoriesScreen>
     super.dispose();
   }
 
-  Future<Map<String, dynamic>> _getItems(String mealType) async {
+  Future<List<Meal>> _getItems(String mealType) async {
     const appId = 'd414be06';
     const appKey = 'c29462a45fd31a59c4a4f5f167305059';
 
@@ -64,20 +63,43 @@ class _CategoriesScreenState extends State<CategoriesScreen>
 
     // throw Exception();
 
-    final Map<String, dynamic> listData = json.decode(response.body);
+    final listData = json.decode(response.body);
 
     // print(listData['hits'][1]);
 
     final List<Meal> loadedItems = [];
+    // print(listData['hits'][0]);
 
     for (final item in listData['hits']) {
-      print(item);
-
-      // loadedItems.add(
-      //   Meal(label: item.label, image: item.image, source: item.source, url: item.url, dietLabels: dietLabels, healthLabels: healthLabels, ingredientLines: ingredientLines, calories: calories, totalTime: totalTime, cuisineType: cuisineType, mealType: mealType, dishType: dishType, instructions: instructions, tags: tags, links: links)
-      // );
+      final recipe = item['recipe'];
+      // print(recipe._links);
+      loadedItems.add(
+        Meal(
+            label: recipe['label'],
+            image: recipe['image'],
+            source: recipe['source'],
+            url: recipe['url'],
+            dietLabels: (recipe['dietLabels'] as List<dynamic>).cast<String>(),
+            healthLabels:
+                (recipe['healthLabels'] as List<dynamic>).cast<String>(),
+            ingredientLines:
+                (recipe['ingredientLines'] as List<dynamic>).cast<String>(),
+            calories: recipe['calories'],
+            totalTime: recipe['totalTime'],
+            cuisineType:
+                (recipe['cuisineType'] as List<dynamic>).cast<String>(),
+            mealType: (recipe['mealType'] as List<dynamic>).cast<String>(),
+            dishType: (recipe['dishType'] as List<dynamic>).cast<String>(),
+            instructions: (recipe['instructions'] != null)
+                ? (recipe['instructions'] as List<dynamic>).cast<String>()
+                : null,
+            tags: (recipe['tags'] != null)
+                ? (recipe['tags'] as List<dynamic>).cast<String>()
+                : null,
+            link: recipe['_links']),
+      );
     }
-    return listData;
+    return loadedItems;
   }
 
   void _selectCategory(BuildContext context, Category category) async {
@@ -85,16 +107,16 @@ class _CategoriesScreenState extends State<CategoriesScreen>
     //     .where((meal) => meal.categories.contains(category.id))
     //     .toList();
 
-    final filteredMeals = _getItems(category.mealType);
+    final filteredMeals = await _getItems(category.mealType);
 
-    // Navigator.of(context).push(
-    //   MaterialPageRoute(
-    //     builder: (ctx) => MealsScreen(
-    //       title: category.mealType,
-    //       meals: filteredMeals,
-    //     ),
-    //   ),
-    // );
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (ctx) => MealsScreen(
+          title: category.mealType,
+          meals: filteredMeals,
+        ),
+      ),
+    );
   }
 
   @override

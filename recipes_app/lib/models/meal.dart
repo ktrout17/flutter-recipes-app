@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 enum Complexity {
   simple,
   challenging,
@@ -26,9 +24,9 @@ class Meal {
     required this.cuisineType,
     required this.mealType,
     required this.dishType,
-    required this.instructions,
-    required this.tags,
-    required this.links,
+    this.instructions,
+    this.tags,
+    this.link,
   });
 
   final String label;
@@ -38,12 +36,12 @@ class Meal {
   final List<String> dietLabels;
   final List<String> healthLabels;
   final List<String> ingredientLines;
-  final Float calories;
-  final String totalTime;
+  final double calories;
+  final double totalTime;
   final List<String> cuisineType;
   final List<String> mealType;
   final List<String> dishType;
-  final List<String> instructions;
-  final List<String> tags;
-  final List<String> links;
+  final List<String>? instructions;
+  final List<String>? tags;
+  final List<String>? link;
 }
